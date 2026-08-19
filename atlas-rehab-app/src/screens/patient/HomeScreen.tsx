@@ -9,7 +9,7 @@ import { fonts } from '../../theme/typography';
 import { useAppState } from '../../context/AppState';
 
 export function HomeScreen() {
-  const { currentPatient, exercises, appointments, toggleExercise, logout } = useAppState();
+  const { currentPatient, exercises, appointments, toggleExercise } = useAppState();
   const navigation = useNavigation<any>();
 
   const myExercises = exercises.filter((e) => e.patientId === currentPatient?.id);
@@ -23,7 +23,7 @@ export function HomeScreen() {
           <Text style={styles.greetEyebrow}>Merhaba,</Text>
           <Text style={styles.greetTitle}>{currentPatient?.name ?? 'Hasta'}</Text>
         </View>
-        <Pressable onPress={logout} style={styles.logoutBtn}>
+        <Pressable onPress={() => navigation.navigate('Profile')} style={styles.profileBtn}>
           <Icon name="user" size={16} color={colors.paperDim} />
         </Pressable>
       </View>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: 4 },
   greetEyebrow: { fontSize: 12, color: colors.ice300, fontWeight: '600' },
   greetTitle: { fontFamily: fonts.display, fontSize: 21, color: colors.white, marginTop: 1 },
-  logoutBtn: {
+  profileBtn: {
     width: 34, height: 34, borderRadius: 10, borderWidth: 1, borderColor: colors.line,
     alignItems: 'center', justifyContent: 'center',
   },

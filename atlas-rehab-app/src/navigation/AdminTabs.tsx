@@ -8,7 +8,6 @@ import { PendingApprovalsScreen } from '../screens/admin/PendingApprovalsScreen'
 import { AppointmentRequestsScreen } from '../screens/admin/AppointmentRequestsScreen';
 import { SlotOfferScreen } from '../screens/admin/SlotOfferScreen';
 import { PatientsScreen } from '../screens/admin/PatientsScreen';
-import { useAppState } from '../context/AppState';
 
 const Tab = createBottomTabNavigator();
 const ApptStack = createNativeStackNavigator();
@@ -27,16 +26,15 @@ function TabIcon({ name, focused }: { name: IconName; focused: boolean }) {
 }
 
 export function AdminTabs() {
-  const { logout } = useAppState();
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         headerShown: true,
         headerStyle: { backgroundColor: colors.navy950 },
         headerShadowVisible: false,
         headerTintColor: colors.white,
         headerRight: () => (
-          <Pressable onPress={logout} style={styles.logout}>
+          <Pressable onPress={() => navigation.getParent()?.navigate('Profile')} style={styles.logout}>
             <Icon name="user" size={15} color={colors.paperDim} />
           </Pressable>
         ),
@@ -45,7 +43,7 @@ export function AdminTabs() {
         tabBarLabelStyle: { fontSize: 10.5, fontWeight: '600' },
         tabBarActiveTintColor: colors.ice300,
         tabBarInactiveTintColor: colors.paperDim,
-      }}
+      })}
     >
       <Tab.Screen
         name="Onaylar"

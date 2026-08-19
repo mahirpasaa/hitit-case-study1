@@ -5,8 +5,8 @@ import { colors } from '../theme/colors';
 import { useAppState } from '../context/AppState';
 import { AuthScreen } from '../screens/AuthScreen';
 import { PendingApprovalScreen } from '../screens/patient/PendingApprovalScreen';
-import { PatientTabs } from './PatientTabs';
-import { AdminTabs } from './AdminTabs';
+import { PatientRoot } from './PatientRoot';
+import { AdminRoot } from './AdminRoot';
 
 const navTheme = {
   ...DarkTheme,
@@ -33,11 +33,11 @@ export function RootNavigator() {
   } else if (!session) {
     content = <AuthScreen />;
   } else if (session.role === 'admin') {
-    content = <AdminTabs />;
+    content = <AdminRoot />;
   } else if (currentPatient?.status === 'pending') {
     content = <PendingApprovalScreen />;
   } else if (currentPatient) {
-    content = <PatientTabs />;
+    content = <PatientRoot />;
   } else {
     content = <AuthScreen />;
   }
