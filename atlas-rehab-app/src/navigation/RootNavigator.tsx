@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, ActivityIndicator } from 'react-native';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { colors } from '../theme/colors';
 import { useAppState } from '../context/AppState';
@@ -20,10 +21,16 @@ const navTheme = {
 };
 
 export function RootNavigator() {
-  const { session, currentPatient } = useAppState();
+  const { session, currentPatient, loading } = useAppState();
 
   let content: React.ReactNode;
-  if (!session) {
+  if (loading) {
+    content = (
+      <View style={{ flex: 1, backgroundColor: colors.navy950, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color={colors.ice300} />
+      </View>
+    );
+  } else if (!session) {
     content = <AuthScreen />;
   } else if (session.role === 'admin') {
     content = <AdminTabs />;
